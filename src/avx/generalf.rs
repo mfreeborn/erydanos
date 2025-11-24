@@ -118,7 +118,7 @@ pub unsafe fn _mm256_selecti_ps(mask: __m256i, true_vals: __m256, false_vals: __
 #[inline]
 /// Negates value
 pub unsafe fn _mm256_neg_ps(f: __m256) -> __m256 {
-    _mm256_sub_ps(_mm256_set1_ps(0.), f)
+    unsafe { _mm256_xor_ps(f, _mm256_set1_ps(-0.0)) }
 }
 
 #[inline]

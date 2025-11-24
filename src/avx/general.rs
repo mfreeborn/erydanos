@@ -36,7 +36,7 @@ pub unsafe fn _mm256_abs_pd(f: __m256d) -> __m256d {
 #[inline]
 /// Negates value
 pub unsafe fn _mm256_neg_pd(f: __m256d) -> __m256d {
-    _mm256_sub_pd(_mm256_set1_pd(0.), f)
+    unsafe { _mm256_xor_pd(f, _mm256_set1_pd(-0.0)) }
 }
 
 #[inline]

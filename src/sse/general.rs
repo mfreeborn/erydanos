@@ -61,7 +61,7 @@ pub unsafe fn _mm_abs_pd(f: __m128d) -> __m128d {
 #[inline(always)]
 /// Negates value
 pub unsafe fn _mm_neg_pd(f: __m128d) -> __m128d {
-    _mm_sub_pd(_mm_set1_pd(0.), f)
+    unsafe { _mm_xor_pd(f, _mm_set1_pd(-0.0)) }
 }
 
 #[inline]
