@@ -21,7 +21,7 @@ pub unsafe fn _mm256_prefer_fma_pd(a: __m256d, b: __m256d, c: __m256d) -> __m256
 #[inline]
 /// Computes `a*b + c`
 pub unsafe fn _mm256_mlaf_pd(a: __m256d, b: __m256d, c: __m256d) -> __m256d {
-    _mm256_prefer_fma_pd(c, b, a)
+    _mm256_fmadd_pd(a, b, c)
 }
 
 #[inline]

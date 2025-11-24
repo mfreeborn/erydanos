@@ -32,7 +32,7 @@ pub unsafe fn _mm_ldexp3k_pd(x: __m128d, n: __m128i) -> __m128d {
 #[inline(always)]
 /// Computes `a*b + c`
 pub unsafe fn _mm_mlaf_pd(a: __m128d, b: __m128d, c: __m128d) -> __m128d {
-    _mm_prefer_fma_pd(c, b, a)
+    _mm_add_pd(_mm_mul_pd(a, b), c)
 }
 
 #[cfg(not(target_feature = "fma"))]

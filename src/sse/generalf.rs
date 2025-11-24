@@ -45,7 +45,7 @@ pub unsafe fn _mm_prefer_fma_ps(a: __m128, b: __m128, c: __m128) -> __m128 {
 #[inline]
 /// Computes `a*b + c`
 pub unsafe fn _mm_mlaf_ps(a: __m128, b: __m128, c: __m128) -> __m128 {
-    _mm_prefer_fma_ps(c, b, a)
+    _mm_add_ps(_mm_mul_ps(a, b), c)
 }
 
 #[inline(always)]

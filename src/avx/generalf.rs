@@ -34,7 +34,7 @@ pub unsafe fn _mm256_prefer_fma_ps(a: __m256, b: __m256, c: __m256) -> __m256 {
 #[inline]
 /// Computes `a*b + c`
 pub unsafe fn _mm256_mlaf_ps(a: __m256, b: __m256, c: __m256) -> __m256 {
-    _mm256_prefer_fma_ps(c, b, a)
+    _mm256_fmadd_ps(a, b, c)
 }
 
 #[inline]
