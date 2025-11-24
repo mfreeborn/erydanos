@@ -22,7 +22,7 @@ use std::arch::x86::*;
 #[cfg(all(target_arch = "x86_64", target_feature = "sse4.1"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 pub(crate) fn halley_cbrt<T: Copy + Mul<Output = T> + Div<Output = T> + Add<Output = T> + 'static>(
     x: T,
     a: T,
@@ -36,7 +36,7 @@ where
 
 const B1: u32 = 709958130;
 
-#[inline]
+#[inline(always)]
 fn do_cbrtf(x: f32) -> f32 {
     if x == 0. {
         return x;
@@ -63,7 +63,7 @@ fn do_cbrtf(x: f32) -> f32 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_cbrtf_neon(d: f32) -> f32 {
     unsafe {
         let ld = vdupq_n_f32(d);
@@ -75,7 +75,7 @@ fn do_cbrtf_neon(d: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_cbrt_sse(d: f32) -> f32 {
     unsafe {
         let v = _mm_set1_ps(d);
@@ -85,7 +85,7 @@ fn do_cbrt_sse(d: f32) -> f32 {
 }
 
 /// Takes cube root from value *ULP 1.5*
-#[inline]
+#[inline(always)]
 pub fn ecbrtf(x: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_cbrtf;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

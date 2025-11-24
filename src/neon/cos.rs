@@ -13,7 +13,7 @@ use crate::sin::{
     SIN_POLY_6_D, SIN_POLY_7_D, SIN_POLY_8_D, SIN_POLY_9_D,
 };
 
-#[inline]
+#[inline(always)]
 pub unsafe fn vcosq_f64(d: float64x2_t) -> float64x2_t {
     let half_1 = vdupq_n_f64(0.5f64);
     let pt = vcvtaq_s64_f64(vsubq_f64(

@@ -31,7 +31,7 @@ pub(crate) const TAN_POLY_7_S: f32 = 0.01566058603292222557185f32;
 pub(crate) const TAN_POLY_8_S: f32 = -0.008780698867440909852696f32;
 pub(crate) const TAN_POLY_9_S: f32 = 0.003119367819237227984603f32;
 
-#[inline]
+#[inline(always)]
 fn do_tanf(d: f32) -> f32 {
     let qf = rintfk(d * FRAC_2_PI);
     let q = qf as i32;
@@ -90,7 +90,7 @@ fn do_tanf_sse(d: f32) -> f32 {
 }
 
 /// Computes tan *ULP 2.0*
-#[inline]
+#[inline(always)]
 pub fn etanf(d: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_tanf;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

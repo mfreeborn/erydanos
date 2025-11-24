@@ -18,7 +18,7 @@ use crate::tan::{
 };
 use crate::{_mm_cvtepi64_pd, _mm_mlaf_pd, _mm_neg_pd, _mm_selecti_pd};
 
-#[inline]
+#[inline(always)]
 /// Computes tan function with error bound *ULP 1.5*
 pub unsafe fn _mm_tan_pd(d: __m128d) -> __m128d {
     let q = _mm_rint_pd(_mm_mul_pd(d, _mm_set1_pd(std::f64::consts::FRAC_2_PI)));

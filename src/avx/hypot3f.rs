@@ -14,7 +14,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Method that computes 3D Euclidian distance *ULP 0.6667*
 pub unsafe fn _mm256_hypot3_ps(x: __m256, y: __m256, z: __m256) -> __m256 {
     let x = _mm256_abs_ps(x);
@@ -49,7 +49,7 @@ pub unsafe fn _mm256_hypot3_ps(x: __m256, y: __m256, z: __m256) -> __m256 {
 }
 
 /// Method that computes 3D Euclidian distance *ULP 0.6666*, skipping Inf, Nan checks
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm256_hypot3_fast_ps(x: __m256, y: __m256, z: __m256) -> __m256 {
     let x = _mm256_abs_ps(x);
     let y = _mm256_abs_ps(y);

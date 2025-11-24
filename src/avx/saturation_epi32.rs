@@ -12,7 +12,7 @@ use std::arch::x86_64::*;
 
 use crate::{_mm256_blendv_epi32, _mm256_cmplt_epu32};
 
-#[inline]
+#[inline(always)]
 /// Add unsigned 32 bytes integers using saturation
 pub unsafe fn _mm256_adds_epu32(a: __m256i, b: __m256i) -> __m256i {
     let result = _mm256_add_epi32(a, b);
@@ -25,7 +25,7 @@ pub unsafe fn _mm256_adds_epu32(a: __m256i, b: __m256i) -> __m256i {
     )
 }
 
-#[inline]
+#[inline(always)]
 /// Add signed 32 bytes integers using saturation
 pub unsafe fn _mm256_adds_epi32(a: __m256i, b: __m256i) -> __m256i {
     let res = _mm256_add_epi32(a, b);
@@ -41,7 +41,7 @@ pub unsafe fn _mm256_adds_epi32(a: __m256i, b: __m256i) -> __m256i {
     )
 }
 
-#[inline]
+#[inline(always)]
 /// Subtract signed integers 32 using saturation
 pub unsafe fn _mm256_subs_epi32(lhs: __m256i, rhs: __m256i) -> __m256i {
     let res = _mm256_sub_epi32(lhs, rhs);

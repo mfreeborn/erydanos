@@ -13,7 +13,7 @@ use std::arch::x86::*;
 use std::arch::x86_64::*;
 
 /// Computes sine function with error bound *ULP 1.5*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_sin_ps(d: __m128) -> __m128 {
     let q = _mm_rint_ps(_mm_mul_ps(d, _mm_set1_ps(std::f32::consts::FRAC_1_PI)));
     let qf = _mm_cvtepi32_ps(q);

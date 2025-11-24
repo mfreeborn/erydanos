@@ -36,14 +36,14 @@ pub unsafe fn _mm_mlaf_pd(a: __m128d, b: __m128d, c: __m128d) -> __m128d {
 }
 
 #[cfg(not(target_feature = "fma"))]
-#[inline]
+#[inline(always)]
 /// Computes `b*c + a` using fma when available
 pub unsafe fn _mm_prefer_fma_pd(a: __m128d, b: __m128d, c: __m128d) -> __m128d {
     return _mm_add_pd(_mm_mul_pd(b, c), a);
 }
 
 #[cfg(target_feature = "fma")]
-#[inline]
+#[inline(always)]
 /// Computes `b*c + a` using fma when available
 pub unsafe fn _mm_prefer_fma_pd(a: __m128d, b: __m128d, c: __m128d) -> __m128d {
     _mm_fmadd_pd(b, c, a)
@@ -64,13 +64,13 @@ pub unsafe fn _mm_neg_pd(f: __m128d) -> __m128d {
     unsafe { _mm_xor_pd(f, _mm_set1_pd(-0.0)) }
 }
 
-#[inline]
+#[inline(always)]
 /// Returns flag value is Infinity
 pub unsafe fn _mm_isinf_pd(d: __m128d) -> __m128d {
     _mm_cmpeq_pd(_mm_abs_pd(d), _mm_set1_pd(f64::INFINITY))
 }
 
-#[inline]
+#[inline(always)]
 /// Extracts f64 value
 pub unsafe fn _mm_extract_pd<const IMM: i32>(d: __m128d) -> f64 {
     #[cfg(target_arch = "x86_64")]
@@ -96,43 +96,43 @@ pub unsafe fn _mm_extract_pd<const IMM: i32>(d: __m128d) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Returns true flag if value is NaN
 pub unsafe fn _mm_isnan_pd(d: __m128d) -> __m128d {
     _mm_cmpneq_pd(d, d)
 }
 
-#[inline]
+#[inline(always)]
 /// Returns flag value is zero
 pub unsafe fn _mm_eqzero_pd(d: __m128d) -> __m128d {
     _mm_cmpeq_pd(d, _mm_set1_pd(0.))
 }
 
-#[inline]
+#[inline(always)]
 /// If mask then `true_vals` otherwise `false_val`
 pub unsafe fn _mm_select_pd(mask: __m128d, true_vals: __m128d, false_vals: __m128d) -> __m128d {
     _mm_blendv_pd(false_vals, true_vals, mask)
 }
 
-#[inline]
+#[inline(always)]
 /// If mask then `true_vals` otherwise `false_val`
 pub unsafe fn _mm_selecti_pd(mask: __m128i, true_vals: __m128d, false_vals: __m128d) -> __m128d {
     _mm_blendv_pd(false_vals, true_vals, _mm_castsi128_pd(mask))
 }
 
-#[inline]
+#[inline(always)]
 /// Returns flag value is lower than zero
 pub unsafe fn _mm_ltzero_pd(d: __m128d) -> __m128d {
     _mm_cmplt_pd(d, _mm_set1_pd(0.))
 }
 
-#[inline]
+#[inline(always)]
 /// Computes 2^n in f64 form for signed 64 bits integers, returns f64 in bits
 pub unsafe fn _mm_pow2i_epi64(n: __m128i) -> __m128i {
     _mm_slli_epi64::<52>(_mm_add_epi64(n, _mm_set1_epi32(0x3ff)))
 }
 
-#[inline]
+#[inline(always)]
 /// Converts double into signed 64 bytes int with truncation
 pub unsafe fn _mm_cvtpd_epi64(v: __m128d) -> __m128i {
     let k51 = _mm_set1_epi64x(51 + 0x3FF);
@@ -179,7 +179,7 @@ pub unsafe fn _mm_cvtpd_epi64(v: __m128d) -> __m128i {
     )
 }
 
-#[inline]
+#[inline(always)]
 /// Converts double into unsigned int 64 bytes with truncation
 pub unsafe fn _mm_cvtpd_epu64(v: __m128d) -> __m128i {
     let k51 = _mm_set1_epi64x(51 + 0x3FF);
@@ -224,7 +224,7 @@ pub unsafe fn _mm_cvtpd_epu64(v: __m128d) -> __m128i {
     _mm_and_si128(lower_bounded, upper_bound_mask)
 }
 
-#[inline]
+#[inline(always)]
 /// Rounds and takes integral part 64 bytes from double
 pub unsafe fn _mm_rint_pd(f: __m128d) -> __m128i {
     const ROUNDING_FLAG: i32 = _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC;
@@ -232,7 +232,7 @@ pub unsafe fn _mm_rint_pd(f: __m128d) -> __m128i {
     _mm_cvtpd_epi64(k)
 }
 
-#[inline]
+#[inline(always)]
 /// Copies sign from `y` to `x`
 pub unsafe fn _mm_copysign_pd(x: __m128d, y: __m128d) -> __m128d {
     _mm_castsi128_pd(_mm_xor_si128(
@@ -241,19 +241,19 @@ pub unsafe fn _mm_copysign_pd(x: __m128d, y: __m128d) -> __m128d {
     ))
 }
 
-#[inline]
+#[inline(always)]
 /// Returns flag value is Neg Infinity
 pub unsafe fn _mm_isneginf_pd(d: __m128d) -> __m128d {
     _mm_cmpeq_pd(d, _mm_set1_pd(f64::NEG_INFINITY))
 }
 
-#[inline]
+#[inline(always)]
 /// Checks if arguments is integral value
 pub unsafe fn _mm_isintegral_pd(d: __m128d) -> __m128d {
     _mm_cmpeq_pd(d, _mm_floor_pd(d))
 }
 
-#[inline]
+#[inline(always)]
 /// Checks if arguments is not integral value
 pub unsafe fn _mm_isnotintegral_pd(d: __m128d) -> __m128d {
     _mm_cmpneq_pd(d, _mm_floor_pd(d))

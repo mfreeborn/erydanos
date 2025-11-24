@@ -17,7 +17,7 @@ use crate::{
 };
 
 /// Method that computes ln skipping Inf, Nan checks, error bound *ULP 1.5*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm256_ln_fast_ps(d: __m256) -> __m256 {
     let n = _mm256_ilogb2kq_ps(_mm256_mul_ps(d, _mm256_set1_ps(1f32 / 0.75f32)));
     let a = _mm256_ldexp3kq_ps(d, _mm256_neg_epi32(n));
@@ -37,7 +37,7 @@ pub unsafe fn _mm256_ln_fast_ps(d: __m256) -> __m256 {
 }
 
 /// Computes natural logarithm for an argument *ULP 1.5*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm256_ln_ps(d: __m256) -> __m256 {
     let mut res = _mm256_ln_fast_ps(d);
     // d == 0 || d == Inf -> Inf

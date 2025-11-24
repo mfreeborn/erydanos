@@ -12,7 +12,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Computes cosine function with error bound *ULP 1.5*
 pub unsafe fn _mm_cos_ps(d: __m128) -> __m128 {
     let q = _mm_add_epi32(

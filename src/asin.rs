@@ -43,7 +43,7 @@ pub(crate) const ASIN_POLY_17_D: f64 = 8.504557880477015298817;
 pub(crate) const ASIN_POLY_18_D: f64 = -4.795580928637641353576;
 pub(crate) const ASIN_POLY_19_D: f64 = 1.287092068615565929449;
 
-#[inline]
+#[inline(always)]
 fn do_asin(c: f64) -> f64 {
     if eabs(c) > 1f64 {
         return f64::NAN;
@@ -85,7 +85,7 @@ fn do_asin(c: f64) -> f64 {
     copysignk(v, c)
 }
 
-#[inline]
+#[inline(always)]
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
 fn do_asin_neon(d: f64) -> f64 {
     unsafe {
@@ -94,7 +94,7 @@ fn do_asin_neon(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 #[cfg(all(
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
@@ -106,7 +106,7 @@ fn do_asin_sse(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Computes arcsin, error bound *ULP 2.0*
 pub fn easin(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_asin;

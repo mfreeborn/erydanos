@@ -44,7 +44,7 @@ fn do_hypot(x: f64, y: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_hypot_neon(x: f64, y: f64) -> f64 {
     unsafe {
         let vx = vdupq_n_f64(x);
@@ -57,7 +57,7 @@ fn do_hypot_neon(x: f64, y: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_hypot_sse(x: f64, y: f64) -> f64 {
     unsafe {
         let vx = _mm_set1_pd(x);

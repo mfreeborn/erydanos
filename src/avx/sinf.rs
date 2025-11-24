@@ -14,7 +14,7 @@ use crate::sinf::{SIN_POLY_1_S, SIN_POLY_2_S, SIN_POLY_3_S, SIN_POLY_4_S, SIN_PO
 use crate::{_mm256_mlaf_ps, _mm256_neg_ps, _mm256_rint_ps, _mm256_selecti_ps};
 
 /// Computes sine function with error bound *ULP 1.5*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm256_sin_ps(d: __m256) -> __m256 {
     let q = _mm256_rint_ps(_mm256_mul_ps(
         d,

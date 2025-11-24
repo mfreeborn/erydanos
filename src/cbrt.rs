@@ -23,7 +23,7 @@ use std::arch::x86_64::*;
 
 const B1: u32 = 715094163;
 
-#[inline]
+#[inline(always)]
 fn do_ecbrt(x: f64) -> f64 {
     if x == 0f64 {
         return x;

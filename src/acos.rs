@@ -20,7 +20,7 @@ use std::arch::x86::*;
 #[cfg(all(target_arch = "x86_64", target_feature = "sse4.1"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 fn do_acos(x: f64) -> f64 {
     if x > 0f64 {
         std::f64::consts::FRAC_PI_2 - easin(x)
@@ -30,7 +30,7 @@ fn do_acos(x: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
 fn do_acos_neon(d: f64) -> f64 {
     unsafe {
@@ -39,7 +39,7 @@ fn do_acos_neon(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 #[cfg(all(
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
@@ -51,7 +51,7 @@ fn do_acos_sse(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Computes acos for an argument, *ULP 2.0*
 pub fn eacos(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_acos;

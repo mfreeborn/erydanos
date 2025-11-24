@@ -9,7 +9,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Computes fmod for f32
 pub unsafe fn _mm256_fmod_ps(a: __m256, b: __m256) -> __m256 {
     let dividend_vec = a;

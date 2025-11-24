@@ -17,7 +17,7 @@ use crate::atan::eatan;
 ))]
 use crate::{_mm_atan2_pd, _mm_extract_pd};
 
-#[inline]
+#[inline(always)]
 fn do_atan2(y: f64, x: f64) -> f64 {
     if x == 0. {
         if y > 0. {
@@ -45,7 +45,7 @@ fn do_atan2(y: f64, x: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_atan2_sse(y: f64, x: f64) -> f64 {
     unsafe {
         let vx = _mm_set1_pd(x);
@@ -54,7 +54,7 @@ fn do_atan2_sse(y: f64, x: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 pub fn eatan2(y: f64, x: f64) -> f64 {
     let mut _dispatcher: fn(f64, f64) -> f64 = do_atan2;
     #[cfg(all(

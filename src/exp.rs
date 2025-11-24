@@ -32,7 +32,7 @@ pub(crate) const L2_L: f64 = 0.282_352_905_630_315_771_225_884_481_750_134_360_2
 pub(crate) const R_LN2: f64 =
     1.442_695_040_888_963_407_359_924_681_001_892_137_426_645_954_152_985_934_135_449_406_931;
 
-#[inline]
+#[inline(always)]
 fn do_exp(d: f64) -> f64 {
     let qf = rintk(d * R_LN2);
     let q = qf as i32;
@@ -60,7 +60,7 @@ fn do_exp(d: f64) -> f64 {
     r
 }
 
-#[inline]
+#[inline(always)]
 pub fn do_exp_coeff(d: f64, coeff: &[f64]) -> f64 {
     let qf = rintk(d * R_LN2);
     let q = qf as i32;
@@ -89,7 +89,7 @@ pub fn do_exp_coeff(d: f64, coeff: &[f64]) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_exp_neon(d: f64) -> f64 {
     unsafe {
         let ld = vdupq_n_f64(d);
@@ -101,7 +101,7 @@ fn do_exp_neon(d: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_exp_sse(d: f64) -> f64 {
     unsafe {
         let ld = _mm_set1_pd(d);
@@ -109,7 +109,7 @@ fn do_exp_sse(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Computes exp with error bound *ULP 1.0*
 pub fn eexp(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_exp;

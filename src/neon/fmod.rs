@@ -7,7 +7,7 @@
 
 use std::arch::aarch64::*;
 
-#[inline]
+#[inline(always)]
 /// Compute fmod for f64
 pub unsafe fn vfmodq_f64(a: float64x2_t, b: float64x2_t) -> float64x2_t {
     let dividend_vec = a;

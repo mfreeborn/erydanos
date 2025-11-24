@@ -10,7 +10,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Computes fmod for f64
 pub unsafe fn _mm_fmod_pd(a: __m128d, b: __m128d) -> __m128d {
     let dividend_vec = a;

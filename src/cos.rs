@@ -24,7 +24,7 @@ use std::arch::x86::*;
 #[cfg(all(target_arch = "x86_64", target_feature = "sse4.1"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 fn do_cos(d: f64) -> f64 {
     let j = rintk(std::f64::consts::FRAC_1_PI * d - 0.5);
     let qf = 1. + 2. * j;
@@ -56,7 +56,7 @@ fn do_cos(d: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_cos_neon(d: f64) -> f64 {
     unsafe {
         let j = vdupq_n_f64(d);
@@ -68,7 +68,7 @@ fn do_cos_neon(d: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_cos_sse(d: f64) -> f64 {
     unsafe {
         let j = _mm_set1_pd(d);

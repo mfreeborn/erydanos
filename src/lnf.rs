@@ -26,7 +26,7 @@ pub const LN_POLY_3_F: f32 = 0.40017125f32;
 pub const LN_POLY_4_F: f32 = 0.28523374f32;
 pub const LN_POLY_5_F: f32 = 0.23616748f32;
 
-#[inline]
+#[inline(always)]
 fn do_ln(d: f32) -> f32 {
     // ln(𝑥)=ln(𝑎)+𝑛ln(2)
     let n = ilogb2kf(d * (1. / 0.75));
@@ -51,7 +51,7 @@ fn do_ln(d: f32) -> f32 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_lnf_neon(x: f32) -> f32 {
     unsafe {
         let vx = vdupq_n_f32(x);
@@ -63,7 +63,7 @@ fn do_lnf_neon(x: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_ln_sse(d: f32) -> f32 {
     unsafe {
         let v = _mm_set1_ps(d);

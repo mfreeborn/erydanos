@@ -40,7 +40,7 @@ pub const ATAN_POLY_19_D: f64 = 0.0007161859397322825641862;
 pub const ATAN_POLY_20_D: f64 = -0.0001278956066478230268751;
 pub const ATAN_POLY_21_D: f64 = 0.00001085532590549307282752;
 
-#[inline]
+#[inline(always)]
 fn do_atan(d: f64) -> f64 {
     let mut x = d;
     let q = if x < 0f64 {
@@ -93,7 +93,7 @@ fn do_atan(d: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_atan_sse(d: f64) -> f64 {
     unsafe {
         let j = _mm_set1_pd(d);
@@ -101,7 +101,7 @@ fn do_atan_sse(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Computes atan for f64 with error bound *ULP 2.0*
 pub fn eatan(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_atan;

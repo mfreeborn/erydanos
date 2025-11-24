@@ -6,7 +6,7 @@
  */
 use std::arch::aarch64::*;
 
-#[inline]
+#[inline(always)]
 /// Compute fmod for f32
 pub unsafe fn vfmodq_f32(a: float32x4_t, b: float32x4_t) -> float32x4_t {
     let dividend_vec = a;

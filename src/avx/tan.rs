@@ -19,7 +19,7 @@ use crate::{
     _mm256_cvtepi64_pdx, _mm256_mlaf_pd, _mm256_neg_pd, _mm256_rint_pd, _mm256_selecti_pd,
 };
 
-#[inline]
+#[inline(always)]
 /// Computes tan function with error bound *ULP 1.5*
 pub unsafe fn _mm256_tan_pd(d: __m256d) -> __m256d {
     let q = _mm256_rint_pd(_mm256_mul_pd(

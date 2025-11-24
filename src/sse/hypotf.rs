@@ -10,7 +10,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Method that computes 2D Euclidian distance *ULP 0.6667*
 pub unsafe fn _mm_hypot_ps(x: __m128, y: __m128) -> __m128 {
     let x = _mm_abs_ps(x);
@@ -30,7 +30,7 @@ pub unsafe fn _mm_hypot_ps(x: __m128, y: __m128) -> __m128 {
 }
 
 /// Method that computes 2D Euclidian distance *ULP 0.6667*, skipping Inf, Nan checks
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_hypot_fast_ps(x: __m128, y: __m128) -> __m128 {
     let x = _mm_abs_ps(x);
     let y = _mm_abs_ps(y);

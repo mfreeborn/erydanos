@@ -19,7 +19,7 @@ use std::arch::x86::*;
 #[cfg(all(target_arch = "x86_64", target_feature = "sse4.1"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 fn do_hypot4f(x: f32, y: f32, z: f32, w: f32) -> f32 {
     let x = eabsf(x);
     let y = eabsf(y);
@@ -51,7 +51,7 @@ fn do_hypot4f(x: f32, y: f32, z: f32, w: f32) -> f32 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_hypot4f_neon(x: f32, y: f32, z: f32, w: f32) -> f32 {
     unsafe {
         let vx = vdupq_n_f32(x);
@@ -66,7 +66,7 @@ fn do_hypot4f_neon(x: f32, y: f32, z: f32, w: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_hypot4f_sse(x: f32, y: f32, z: f32, w: f32) -> f32 {
     unsafe {
         let vx = _mm_set1_ps(x);
@@ -78,7 +78,7 @@ fn do_hypot4f_sse(x: f32, y: f32, z: f32, w: f32) -> f32 {
 }
 
 /// Computes 4D Euclidian Distance *ULP 0.6666*
-#[inline]
+#[inline(always)]
 pub fn ehypot4f(x: f32, y: f32, z: f32, w: f32) -> f32 {
     let mut _dispatcher: fn(f32, f32, f32, f32) -> f32 = do_hypot4f;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

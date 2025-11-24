@@ -17,7 +17,7 @@ use crate::{
     _mm256_cvtepi64_pdx, _mm256_mlaf_pd, _mm256_neg_pd, _mm256_rint_pd, _mm256_selecti_pd,
 };
 
-#[inline]
+#[inline(always)]
 /// Computes sine function with *ULP 1.5* on range [-15; 15]
 pub unsafe fn _mm256_sin_pd(d: __m256d) -> __m256d {
     let q = _mm256_rint_pd(_mm256_mul_pd(

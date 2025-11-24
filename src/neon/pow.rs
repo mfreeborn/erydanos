@@ -11,7 +11,7 @@ use crate::neon::ln::vlnq_f64;
 use crate::visnotintegralq_f64;
 use std::arch::aarch64::*;
 
-#[inline]
+#[inline(always)]
 /// Method computes pow for NEON, with Inf, Nan checks
 pub unsafe fn vpowq_f64(d: float64x2_t, n: float64x2_t) -> float64x2_t {
     let value = vabsq_f64(d);

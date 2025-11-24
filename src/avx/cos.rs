@@ -19,7 +19,7 @@ use crate::{
     _mm256_selecti_pd,
 };
 
-#[inline]
+#[inline(always)]
 /// Computes cosine function with error bound *ULP 2.0*
 pub unsafe fn _mm256_cos_pd(d: __m256d) -> __m256d {
     let j = _mm256_rint_pd(_mm256_sub_pd(

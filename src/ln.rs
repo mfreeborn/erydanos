@@ -31,7 +31,7 @@ pub(crate) const LN_POLY_7_D: f64 = 0.152_519_917_006_351_951_593_857;
 pub(crate) const LN_POLY_8_D: f64 = 0.153_487_338_491_425_068_243_146;
 
 // Absolute error 1.136351756823757474514312*10^-18
-#[inline]
+#[inline(always)]
 fn do_ln(d: f64) -> f64 {
     // ln(𝑥)=ln(𝑎)+𝑛ln(2)
     let n = ilogb2k(d * (1. / 0.75));
@@ -60,7 +60,7 @@ fn do_ln(d: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_ln_neon(x: f64) -> f64 {
     unsafe {
         let vx = vdupq_n_f64(x);
@@ -72,7 +72,7 @@ fn do_ln_neon(x: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_ln_sse(x: f64) -> f64 {
     unsafe {
         let vx = _mm_set1_pd(x);

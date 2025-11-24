@@ -17,7 +17,7 @@ use crate::sin::{
 use crate::sse::general::_mm_rint_pd;
 use crate::{_mm_cvtepi64_pd, _mm_mlaf_pd, _mm_mul_epi64, _mm_neg_pd, _mm_selecti_pd};
 
-#[inline]
+#[inline(always)]
 /// Computes cosine function with error bound *ULP 2.0*
 pub unsafe fn _mm_cos_pd(d: __m128d) -> __m128d {
     let j = _mm_rint_pd(_mm_sub_pd(

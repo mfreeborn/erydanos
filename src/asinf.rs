@@ -31,7 +31,7 @@ pub(crate) const ASIN_POLY_7_F: u32 = 0x3dce28d2; // 0.10064352904194375
 pub(crate) const ASIN_POLY_8_F: u32 = 0xbe16c000; // -0.14719234953315127
 pub(crate) const ASIN_POLY_9_F: u32 = 0x3e292000; // 0.16517876838808404
 
-#[inline]
+#[inline(always)]
 fn do_asinf(c: f32) -> f32 {
     if eabsf(c) > 1f32 {
         return f32::NAN;
@@ -66,7 +66,7 @@ fn do_asinf(c: f32) -> f32 {
     copysignfk(z, c)
 }
 
-#[inline]
+#[inline(always)]
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
 fn do_asinf_neon(d: f32) -> f32 {
     unsafe {
@@ -79,7 +79,7 @@ fn do_asinf_neon(d: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_asinf_sse(d: f32) -> f32 {
     unsafe {
         let v = _mm_set1_ps(d);
@@ -89,7 +89,7 @@ fn do_asinf_sse(d: f32) -> f32 {
 }
 
 /// Computes arcsin, error bound *ULP 2.0*
-#[inline]
+#[inline(always)]
 pub fn easinf(d: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_asinf;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

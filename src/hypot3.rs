@@ -19,7 +19,7 @@ use std::arch::x86::*;
 #[cfg(all(target_feature = "sse4.1", target_arch = "x86_64"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 fn do_hypot3(x: f64, y: f64, z: f64) -> f64 {
     let x = eabs(x);
     let y = eabs(y);
@@ -50,7 +50,7 @@ fn do_hypot3(x: f64, y: f64, z: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_hypot3_neon(x: f64, y: f64, z: f64) -> f64 {
     unsafe {
         let vx = vdupq_n_f64(x);
@@ -64,7 +64,7 @@ fn do_hypot3_neon(x: f64, y: f64, z: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_hypot3_sse(x: f64, y: f64, z: f64) -> f64 {
     unsafe {
         let vx = _mm_set1_pd(x);
@@ -75,7 +75,7 @@ fn do_hypot3_sse(x: f64, y: f64, z: f64) -> f64 {
 }
 
 /// Computes 3D Euclidian Distance *ULP 0.6666*
-#[inline]
+#[inline(always)]
 pub fn ehypot3(x: f64, y: f64, z: f64) -> f64 {
     let mut _dispatcher: fn(f64, f64, f64) -> f64 = do_hypot3;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

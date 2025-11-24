@@ -67,7 +67,7 @@ fn do_atan2f_sse(y: f32, x: f32) -> f32 {
 }
 
 /// Computes atan2 between vector, *ULP 1.0*
-#[inline]
+#[inline(always)]
 pub fn eatan2f(y: f32, x: f32) -> f32 {
     let mut _dispatcher: fn(f32, f32) -> f32 = do_atan2f;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

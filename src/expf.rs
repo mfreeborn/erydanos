@@ -28,7 +28,7 @@ pub const L2U_F: f32 = 0.693_145_751_953_125;
 pub const L2L_F: f32 = 1.428_606_765_330_187_045_e-6;
 pub const R_LN2_F: f32 = std::f32::consts::LOG2_E;
 
-#[inline]
+#[inline(always)]
 fn do_exp(d: f32) -> f32 {
     let qf = rintfk(d * R_LN2_F);
     let q = qf as i32;
@@ -53,7 +53,7 @@ fn do_exp(d: f32) -> f32 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_exp_neon(d: f32) -> f32 {
     unsafe {
         let ld = vdupq_n_f32(d);
@@ -65,7 +65,7 @@ fn do_exp_neon(d: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_exp_sse(d: f32) -> f32 {
     unsafe {
         let v = _mm_set1_ps(d);
@@ -75,7 +75,7 @@ fn do_exp_sse(d: f32) -> f32 {
 }
 
 /// Computes exp for an argument *ULP 1.0*
-#[inline]
+#[inline(always)]
 pub fn eexpf(d: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_exp;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

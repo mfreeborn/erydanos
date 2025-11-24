@@ -30,7 +30,7 @@ pub(crate) const TAN_POLY_7_D: f64 = 0.146_078_150_240_278_449_4_e-2;
 pub(crate) const TAN_POLY_8_D: f64 = 0.561_921_973_811_432_373_5_e-3;
 pub(crate) const TAN_POLY_9_D: f64 = 0.324_509_882_663_927_631_6_e-3;
 
-#[inline]
+#[inline(always)]
 fn do_tan(d: f64) -> f64 {
     let qlf = rintk(d * std::f64::consts::FRAC_2_PI);
     let q = qlf as isize;
@@ -85,7 +85,7 @@ fn do_tan_sse(d: f64) -> f64 {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Computes tan with error bound *ULP 2.0*
 pub fn etan(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_tan;

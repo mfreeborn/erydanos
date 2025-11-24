@@ -11,7 +11,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Method that computes 4D Euclidian distance *ULP 0.6666*
 pub unsafe fn _mm_hypot4_pd(x: __m128d, y: __m128d, z: __m128d, w: __m128d) -> __m128d {
     let x = _mm_abs_pd(x);
@@ -52,7 +52,7 @@ pub unsafe fn _mm_hypot4_pd(x: __m128d, y: __m128d, z: __m128d, w: __m128d) -> _
 }
 
 /// Method that computes 4D Euclidian distance *ULP 0.6666*, skipping Inf, Nan checks
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_hypot4_fast_pd(x: __m128d, y: __m128d, z: __m128d, w: __m128d) -> __m128d {
     let x = _mm_abs_pd(x);
     let y = _mm_abs_pd(y);

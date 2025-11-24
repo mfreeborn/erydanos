@@ -17,7 +17,7 @@ use crate::tanf::{
 };
 use crate::{_mm256_mlaf_ps, _mm256_neg_ps, _mm256_rint_ps, _mm256_selecti_ps};
 
-#[inline]
+#[inline(always)]
 /// Computes tan function with error bound *ULP 1.5*
 pub unsafe fn _mm256_tan_ps(d: __m256) -> __m256 {
     let q = _mm256_rint_ps(_mm256_mul_ps(

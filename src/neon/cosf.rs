@@ -10,7 +10,7 @@ use crate::neon::general::vmlafq_f32;
 use crate::sinf::{SIN_POLY_1_S, SIN_POLY_2_S, SIN_POLY_3_S, SIN_POLY_4_S, SIN_POLY_5_S};
 use std::arch::aarch64::*;
 
-#[inline]
+#[inline(always)]
 /// Computes cosine function with error bound *ULP 1.5*
 pub unsafe fn vcosq_f32(d: float32x4_t) -> float32x4_t {
     let half_1 = vdupq_n_f32(0.5f32);

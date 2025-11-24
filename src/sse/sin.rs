@@ -15,7 +15,7 @@ use std::arch::x86::*;
 #[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 /// Computes sine function with *ULP 1.5* on range [-15; 15]
 pub unsafe fn _mm_sin_pd(d: __m128d) -> __m128d {
     let q = _mm_rint_pd(_mm_mul_pd(d, _mm_set1_pd(std::f64::consts::FRAC_1_PI)));

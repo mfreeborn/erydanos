@@ -9,7 +9,7 @@ use crate::abs::eabsf;
 use crate::floor::F1_23;
 use crate::generalf::copysignfk;
 
-#[inline]
+#[inline(always)]
 pub fn eceilf(x: f32) -> f32 {
     let mut fr = x - (x as i32 as f32);
     fr = if fr <= 0. { fr } else { fr - 1. };

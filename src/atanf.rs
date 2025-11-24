@@ -21,7 +21,7 @@ pub const ATAN_POLY_7_F: f32 = 0.0393454131479f32;
 pub const ATAN_POLY_8_F: f32 = -0.0141523480362f32;
 pub const ATAN_POLY_9_F: f32 = 0.00239813901251f32;
 
-#[inline]
+#[inline(always)]
 fn do_atanf(d: f32) -> f32 {
     let mut x = d;
     let q = if x < 0f32 {
@@ -66,7 +66,7 @@ fn do_atanf_neon(y: f32) -> f32 {
 }
 
 /// Computes Atan function with *ULP 2.0* error
-#[inline]
+#[inline(always)]
 pub fn eatanf(d: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_atanf;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

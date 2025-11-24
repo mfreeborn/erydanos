@@ -15,7 +15,7 @@ use std::arch::x86::*;
 use std::arch::x86_64::*;
 
 /// Computes Atan function with *ULP 1.0* error
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_atan_ps(x: __m128) -> __m128 {
     let negative_mask = _mm_ltzero_ps(x);
     let d = _mm_abs_ps(x);

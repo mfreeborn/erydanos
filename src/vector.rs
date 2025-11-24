@@ -33,19 +33,19 @@ pub struct Vector<T: VectorFloat> {
 }
 
 impl<T: VectorFloat> Vector<T> {
-    #[inline]
+    #[inline(always)]
     pub const fn new(x: T, y: T) -> Vector<T> {
         Vector { x, y }
     }
 
-    #[inline]
+    #[inline(always)]
     pub fn normalize(self) -> Vector<T> {
         let jx = self.x + self.y;
         let jy = self.x - jx + self.y;
         Vector::new(jx, jy)
     }
 
-    #[inline]
+    #[inline(always)]
     pub fn dfsqu(self) -> Vector<T> {
         let xh = self.x.upper();
         let xl = self.x - xh;
@@ -59,7 +59,7 @@ impl<T: VectorFloat> Vector<T> {
 
 impl<T: VectorFloat> Add<T> for Vector<T> {
     type Output = Self;
-    #[inline]
+    #[inline(always)]
     fn add(self, other: T) -> Self {
         let r0 = self.x + other;
         let v = r0 - self.x;
@@ -68,7 +68,7 @@ impl<T: VectorFloat> Add<T> for Vector<T> {
 }
 
 impl From<f32> for Vector<f32> {
-    #[inline]
+    #[inline(always)]
     fn from(f: f32) -> Self {
         Self::new(f, 0.)
     }
@@ -79,20 +79,20 @@ pub trait Upper {
 }
 
 impl Upper for f32 {
-    #[inline]
+    #[inline(always)]
     fn upper(self) -> Self {
         f32::from_bits(self.to_bits() & 0xfffff000)
     }
 }
 
 impl Upper for f64 {
-    #[inline]
+    #[inline(always)]
     fn upper(self) -> Self {
         f64::from_bits(self.to_bits() & 0xfffffffff8000000)
     }
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn dmul_2_s<T: VectorFloat>(x: T, y: T) -> Vector<T>
 where
     f32: AsPrimitive<T>,
@@ -112,7 +112,7 @@ where
     r
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn dadd_2_s_v<T: VectorFloat>(x: T, y: Vector<T>) -> Vector<T>
 where
     f32: AsPrimitive<T>,
@@ -129,7 +129,7 @@ where
     r
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn drec_2_s<T: VectorFloat>(d: T) -> Vector<T>
 where
     f32: AsPrimitive<T>,
@@ -150,7 +150,7 @@ where
     q
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn dmul_2<T: VectorFloat>(x: Vector<T>, y: Vector<T>) -> Vector<T>
 where
     f32: AsPrimitive<T>,
@@ -170,7 +170,7 @@ where
 }
 
 impl From<Vector<f32>> for f32 {
-    #[inline]
+    #[inline(always)]
     fn from(f: Vector<f32>) -> Self {
         f.x + f.y
     }

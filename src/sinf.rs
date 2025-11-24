@@ -28,7 +28,7 @@ pub const SIN_POLY_3_S: f32 = -0.00019841341f32;
 pub const SIN_POLY_4_S: f32 = 2.7551241e-6f32;
 pub const SIN_POLY_5_S: f32 = -2.4535176e-8f32;
 
-#[inline]
+#[inline(always)]
 fn do_sin(d: f32) -> f32 {
     let qf = rintfk(std::f32::consts::FRAC_1_PI * d);
     let q = qf as i32;
@@ -56,7 +56,7 @@ fn do_sin(d: f32) -> f32 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_sin_neon(d: f32) -> f32 {
     unsafe {
         let j = vdupq_n_f32(d);
@@ -68,7 +68,7 @@ fn do_sin_neon(d: f32) -> f32 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_sin_sse(d: f32) -> f32 {
     unsafe {
         let v = _mm_set1_ps(d);
@@ -78,7 +78,7 @@ fn do_sin_sse(d: f32) -> f32 {
 }
 
 /// Computes sine function with error bound *ULP 1.2*
-#[inline]
+#[inline(always)]
 pub fn esinf(d: f32) -> f32 {
     let mut _dispatcher: fn(f32) -> f32 = do_sin;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

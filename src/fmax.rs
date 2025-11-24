@@ -5,7 +5,7 @@
  * // license that can be found in the LICENSE file.
  */
 
-#[inline]
+#[inline(always)]
 /// Find max between a pair of values
 pub fn efmax(x: f64, y: f64) -> f64 {
     if y.is_nan() || (x > y) {

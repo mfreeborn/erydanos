@@ -15,7 +15,7 @@ use crate::{
     _mm256_isneginf_ps, _mm256_isnotintegral_ps, _mm256_ln_fast_ps, _mm256_ln_ps, _mm256_select_ps,
 };
 
-#[inline]
+#[inline(always)]
 /// Computes pow function *ULP 2.0*
 pub unsafe fn _mm256_pow_ps(d: __m256, n: __m256) -> __m256 {
     let mut c = _mm256_exp_ps(_mm256_mul_ps(n, _mm256_ln_ps(_mm256_abs_ps(d))));
@@ -41,7 +41,7 @@ pub unsafe fn _mm256_pow_ps(d: __m256, n: __m256) -> __m256 {
 }
 
 /// Method that computes pow skipping Inf, Nan checks, *ULP 2.0*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm256_pow_fast_ps(d: __m256, n: __m256) -> __m256 {
     let mut c = _mm256_expq_fast_ps(_mm256_mul_ps(n, _mm256_ln_fast_ps(d)));
     c = _mm256_copysign_ps(c, d);

@@ -21,7 +21,7 @@ use crate::{
 #[derive(Copy, Clone)]
 pub struct __m128x2i(__m128i, __m128i);
 
-#[inline]
+#[inline(always)]
 /// Widening multiplication u64 in u128
 pub unsafe fn _mm_mull_epu64(a: __m128i, b: __m128i) -> __m128x2i {
     let erase_high = _mm_set1_epi64x(0xFFFFFFFF);
@@ -52,7 +52,7 @@ pub unsafe fn _mm_mull_epu64(a: __m128i, b: __m128i) -> __m128x2i {
     rs
 }
 
-#[inline]
+#[inline(always)]
 /// Widening multiplication i64 in i128
 pub unsafe fn _mm_mull_epi64(a: __m128i, b: __m128i) -> __m128x2i {
     let sign_ab = _mm_srli_epi64::<63>(a);
@@ -69,7 +69,7 @@ pub unsafe fn _mm_mull_epi64(a: __m128i, b: __m128i) -> __m128x2i {
     __m128x2i(v0, v1)
 }
 
-#[inline]
+#[inline(always)]
 /// Shifts right u128 immediate
 pub unsafe fn _mm_srli_epi128x<const IMM: i32>(a: __m128x2i) -> __m128x2i {
     if IMM <= 0 {
@@ -88,7 +88,7 @@ pub unsafe fn _mm_srli_epi128x<const IMM: i32>(a: __m128x2i) -> __m128x2i {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Shifts left u128 immediate
 pub unsafe fn _mm_slli_epi128x<const IMM: i32>(a: __m128x2i) -> __m128x2i {
     if IMM >= 64 {
@@ -104,7 +104,7 @@ pub unsafe fn _mm_slli_epi128x<const IMM: i32>(a: __m128x2i) -> __m128x2i {
     }
 }
 
-#[inline]
+#[inline(always)]
 /// Widening add 64 bytes integer to 128 bytes integer
 pub unsafe fn _mm_addw_epi128(a: __m128x2i, b: __m128i) -> __m128x2i {
     let r0 = _mm_add_epi64(a.0, b);
@@ -118,19 +118,19 @@ pub unsafe fn _mm_addw_epi128(a: __m128x2i, b: __m128i) -> __m128x2i {
     )
 }
 
-#[inline]
+#[inline(always)]
 /// Widening substract 64 bytes integer to 128 bytes integer
 pub unsafe fn _mm_subw_epi128(a: __m128x2i, b: __m128i) -> __m128x2i {
     _mm_addw_epi128(a, _mm_neg_epi64(b))
 }
 
-#[inline]
+#[inline(always)]
 /// Saturates 128-bit integers presentation into 64 bits
 pub unsafe fn _mm_movn_epi128(a: __m128x2i) -> __m128i {
     _mm_add_epi64(a.0, a.1)
 }
 
-#[inline]
+#[inline(always)]
 /// Takes absolute value for i128
 pub unsafe fn _mm_abs_epi128(a: __m128x2i) -> __m128x2i {
     let is_neg = _mm_cmplt_epi64(a.1, _mm_setzero_si128());
@@ -141,19 +141,19 @@ pub unsafe fn _mm_abs_epi128(a: __m128x2i) -> __m128x2i {
 }
 
 /// Computes i128 as u64 and extracts lower half in general register
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_extract_lo_epi128<const IMM: i32>(d: __m128x2i) -> i64 {
     _mm_extract_epi64x::<IMM>(d.0)
 }
 
 /// Computes i128 as u64 and extracts upper half in general register
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_extract_hi_epi128<const IMM: i32>(d: __m128x2i) -> i64 {
     _mm_extract_epi64x::<IMM>(d.1)
 }
 
 /// Computes u128 as u128 and extracts in general register
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_extract_epu128<const IMM: i32>(d: __m128x2i) -> u128 {
     let lo = (_mm_extract_epi64x::<IMM>(d.0) as u64) as u128;
     let hi = (_mm_extract_epi64x::<IMM>(d.1) as u64) as u128;
@@ -161,14 +161,14 @@ pub unsafe fn _mm_extract_epu128<const IMM: i32>(d: __m128x2i) -> u128 {
 }
 
 /// Computes u128 as u128 and extracts in general register
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_extract_epi128<const IMM: i32>(d: __m128x2i) -> i128 {
     let lo = (_mm_extract_epi64x::<IMM>(d.0) as u64) as u128;
     let hi = (_mm_extract_epi64x::<IMM>(d.1) as u64) as u128;
     (lo | (hi << 64)) as i128
 }
 
-#[inline]
+#[inline(always)]
 /// Adds s128 to s128 using signed addition
 pub unsafe fn _mm_add_epi128(a: __m128x2i, b: __m128x2i) -> __m128x2i {
     let lo = _mm_add_epi64(a.0, b.0);
@@ -190,7 +190,7 @@ pub unsafe fn _mm_add_epi128(a: __m128x2i, b: __m128x2i) -> __m128x2i {
     __m128x2i(lo, _mm_add_epi64(_mm_add_epi64(a.1, b.1), carry))
 }
 
-#[inline]
+#[inline(always)]
 /// Adds s128 to s128 using unsigned addition
 pub unsafe fn _mm_add_epu128(a: __m128x2i, b: __m128x2i) -> __m128x2i {
     let lo = _mm_add_epi64(a.0, b.0);

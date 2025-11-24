@@ -14,7 +14,7 @@ use crate::{
     _mm_isneginf_pd, _mm_isnotintegral_pd, _mm_ln_fast_pd, _mm_ln_pd, _mm_select_pd,
 };
 
-#[inline]
+#[inline(always)]
 /// Computes pow function *ULP 2.0*
 pub unsafe fn _mm_pow_pd(d: __m128d, n: __m128d) -> __m128d {
     let mut c = _mm_exp_pd(_mm_mul_pd(n, _mm_ln_pd(_mm_abs_pd(d))));
@@ -39,7 +39,7 @@ pub unsafe fn _mm_pow_pd(d: __m128d, n: __m128d) -> __m128d {
 }
 
 /// Method that computes pow skipping Inf, Nan checks, *ULP 2.0*
-#[inline]
+#[inline(always)]
 pub unsafe fn _mm_pow_fast_pd(d: __m128d, n: __m128d) -> __m128d {
     let mut c = _mm_exp_fast_pd(_mm_mul_pd(n, _mm_ln_fast_pd(d)));
     c = _mm_copysign_pd(c, d);

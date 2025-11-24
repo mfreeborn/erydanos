@@ -10,7 +10,7 @@ use crate::{eabs, efmax};
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
 use std::arch::aarch64::*;
 
-#[inline]
+#[inline(always)]
 fn do_hypot4(x: f64, y: f64, z: f64, w: f64) -> f64 {
     let x = eabs(x);
     let y = eabs(y);
@@ -42,7 +42,7 @@ fn do_hypot4(x: f64, y: f64, z: f64, w: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_hypot4_neon(x: f64, y: f64, z: f64, w: f64) -> f64 {
     unsafe {
         let vx = vdupq_n_f64(x);
@@ -54,7 +54,7 @@ fn do_hypot4_neon(x: f64, y: f64, z: f64, w: f64) -> f64 {
 }
 
 /// Computes 4D Euclidian Distance *ULP 0.6666*
-#[inline]
+#[inline(always)]
 pub fn ehypot4(x: f64, y: f64, z: f64, w: f64) -> f64 {
     let mut _dispatcher: fn(f64, f64, f64, f64) -> f64 = do_hypot4;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

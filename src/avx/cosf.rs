@@ -13,7 +13,7 @@ use crate::cosf::{PI_A_F, PI_B_F, PI_C_F, PI_D_F};
 use crate::sinf::{SIN_POLY_1_S, SIN_POLY_2_S, SIN_POLY_3_S, SIN_POLY_4_S, SIN_POLY_5_S};
 use crate::{_mm256_mlaf_ps, _mm256_neg_ps, _mm256_rint_ps, _mm256_selecti_ps};
 
-#[inline]
+#[inline(always)]
 /// Computes cosine function with error bound *ULP 1.5*
 pub unsafe fn _mm256_cos_ps(d: __m256) -> __m256 {
     let q = _mm256_add_epi32(

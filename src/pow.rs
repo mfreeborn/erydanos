@@ -24,7 +24,7 @@ use std::arch::x86::*;
 #[cfg(all(target_arch = "x86_64", target_feature = "sse4.1"))]
 use std::arch::x86_64::*;
 
-#[inline]
+#[inline(always)]
 fn do_pow(d: f64, n: f64) -> f64 {
     let value = eabs(d);
     let mut c = eexp(n * eln(value));
@@ -44,7 +44,7 @@ fn do_pow(d: f64, n: f64) -> f64 {
 }
 
 #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
-#[inline]
+#[inline(always)]
 fn do_pow_neon(d: f64, n: f64) -> f64 {
     unsafe {
         let val = vdupq_n_f64(d);
@@ -57,7 +57,7 @@ fn do_pow_neon(d: f64, n: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_pow_sse(d: f64, n: f64) -> f64 {
     unsafe {
         let val = _mm_set1_pd(d);
@@ -67,7 +67,7 @@ fn do_pow_sse(d: f64, n: f64) -> f64 {
 }
 
 /// Computes power function, error bound *ULP 2.0*
-#[inline]
+#[inline(always)]
 pub fn epow(d: f64, n: f64) -> f64 {
     let mut _dispatcher: fn(f64, f64) -> f64 = do_pow;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]

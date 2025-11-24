@@ -34,7 +34,7 @@ pub(crate) const SIN_POLY_10_D: f64 = -8.118486649859753485496e-18;
 pub(crate) const PI_A2: f64 = 3.141_592_653_589_793_116;
 pub(crate) const PI_B2: f64 = 1.224_646_799_147_353_207_2_e-16;
 
-#[inline]
+#[inline(always)]
 fn do_sin(d: f64) -> f64 {
     let qf = rintk(std::f64::consts::FRAC_1_PI * d);
     let q = qf as i64;
@@ -74,7 +74,7 @@ fn do_sin_neon(d: f64) -> f64 {
     any(target_arch = "x86_64", target_arch = "x86"),
     target_feature = "sse4.1"
 ))]
-#[inline]
+#[inline(always)]
 fn do_sin_sse(d: f64) -> f64 {
     unsafe {
         let j = _mm_set1_pd(d);
@@ -83,7 +83,7 @@ fn do_sin_sse(d: f64) -> f64 {
 }
 
 /// Computes sine function with *ULP 1.5* on range [-15; 15]
-#[inline]
+#[inline(always)]
 pub fn esin(d: f64) -> f64 {
     let mut _dispatcher: fn(f64) -> f64 = do_sin;
     #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
